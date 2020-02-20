@@ -3,6 +3,9 @@ const path = require('path')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin") //sourcemaps
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const config = require('./config')
 
 module.exports = {
     entry: './src/index.js', //入口
@@ -47,7 +50,15 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.SourceMapDevToolPlugin({}),
+        //正式环境不需要sourcemaps
+        //new webpack.SourceMapDevToolPlugin({}),
+        ...config.env === config.DEV ? [new webpack.SourceMapDevToolPlugin({})] : [],
+
+        new HtmlWebpackPlugin({
+            title: 'RC',
+            author: 'hwh',
+            templated: './src/index.html',
+        }),
 
         new MiniCssExtractPlugin({
             filename: 'bundle.css',

@@ -72,6 +72,11 @@ module.exports = {
         "no-trailing-spaces": 2,    // 不允许在语句后存在多余的空格
         "eqeqeq": 2,                // 消除不安全类型的全等操作
         "no-debugger": 1,           // debugger关键字
-        "allowForLoopAfterthoughts": true   // 允许使用一元运算符++ or --
+        "no-plusplus": [
+            "error",
+            {
+                "allowForLoopAfterthoughts": true,
+            }
+        ],   // 允许使用一元运算符++ or --
     },
 }

@@ -2,15 +2,16 @@ const webpack = require('webpack')
 const path = require('path')
 
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const ExtractTextPlugin = require("extract-text-webpack-plugin") //sourcemaps
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require("extract-text-webpack-plugin") // sourcemaps
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 
 const config = require('./config')
 
 module.exports = {
-    entry: './src/index.js', //入口
+    entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'), //打包输出
+        path: path.resolve(__dirname, 'dist'), // 打包输出
         filename: 'bundle.js',
     },
     // devtool: 'inline-source-map', 废弃
@@ -50,18 +51,30 @@ module.exports = {
     },
 
     plugins: [
-        //正式环境不需要sourcemaps
-        //new webpack.SourceMapDevToolPlugin({}),
+        // 正式环境不需要sourcemaps
+        // new webpack.SourceMapDevToolPlugin({}),
         ...config.env === config.DEV ? [new webpack.SourceMapDevToolPlugin({})] : [],
 
+        // html文件生成
         new HtmlWebpackPlugin({
             title: 'RC',
             author: 'hwh',
             templated: './src/index.html',
         }),
 
+        // 独立打包css文件
         new MiniCssExtractPlugin({
             filename: 'bundle.css',
-        })
+        }),
+
+        // dist文件夹清理
+        new CleanWebpackPlugin(),
+
+        // 开启devServer热加载
+        new webpack.HotModuleReplacementPlugin(),
     ],
+    devServer: {
+        hot: true,
+        contentBase: './dist',
+    },
 }

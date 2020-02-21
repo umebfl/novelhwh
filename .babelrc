@@ -1,0 +1,9 @@
+{
+    // jsx\rect 转码配置
+    "presets": ["@babel/preset-env", "@babel/preset-react"],
+    "plugins": [
+        ["import", {"libraryName": "antd"}],
+        ["transform-object-rest-spread", {"useBuiltIns": true}],
+        ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    ]
+}

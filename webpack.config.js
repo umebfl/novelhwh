@@ -12,7 +12,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'), // 打包输出
-        filename: 'bundle.js',
+        filename: 'bundle.[hash].js',
     },
     // devtool: 'inline-source-map', 废弃
     module: {
@@ -58,13 +58,16 @@ module.exports = {
         // html文件生成
         new HtmlWebpackPlugin({
             title: 'RC',
+            version: config.version,
             author: 'hwh',
-            templated: './src/index.html',
+            template: './src/index.html',
+            bundle_time: config.bundle_time,
+            filename: config.env === config.DEV ? 'index.html' : 'index.[hash].html',
         }),
 
         // 独立打包css文件
         new MiniCssExtractPlugin({
-            filename: 'bundle.css',
+            filename: 'bundle.[hash].css',
         }),
 
         // dist文件夹清理
@@ -72,9 +75,26 @@ module.exports = {
 
         // 开启devServer热加载
         new webpack.HotModuleReplacementPlugin(),
+
+        // 自动加载模块
+        new webpack.ProvidePlugin({
+            // ramda-js函数库
+            R: 'ramda',
+        }),
     ],
+
+    // 开发服务器
     devServer: {
         hot: true,
         contentBase: './dist',
     },
+
+    // 全局别名
+    resolve: {
+       moduleExtensions: [path.resolve(__dirname, 'node_modules')],
+       alias: {
+           SYS: path.resolve(__dirname, './'),
+           SRC: path.resolve(__dirname, './src'),
+       },
+   },
 }

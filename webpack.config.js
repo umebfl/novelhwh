@@ -9,7 +9,7 @@ const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const config = require('./config')
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/web/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'), // 打包输出
         filename: 'bundle.[hash].js',
@@ -60,7 +60,7 @@ module.exports = {
             title: 'RC',
             version: config.version,
             author: 'hwh',
-            template: './src/index.html',
+            template: './src/web/index.html',
             bundle_time: config.bundle_time,
             filename: config.env === config.DEV ? 'index.html' : 'index.[hash].html',
         }),
@@ -94,7 +94,7 @@ module.exports = {
        moduleExtensions: [path.resolve(__dirname, 'node_modules')],
        alias: {
            SYS: path.resolve(__dirname, './'),
-           SRC: path.resolve(__dirname, './src'),
+           SRC: path.resolve(__dirname, './src/web'),
        },
    },
 }

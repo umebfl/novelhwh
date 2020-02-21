@@ -75,8 +75,21 @@ module.exports = {
         "no-plusplus": [
             "error",
             {
+                // 允许使用一元运算符++ or --
                 "allowForLoopAfterthoughts": true,
             }
-        ],   // 允许使用一元运算符++ or --
+        ],
+        "react/react-in-jsx-scope": 0,
+        "react/jsx-filename-extension": 0,
+        "react/jsx-tag-spacing": 0,
+        "jsx-quotes": [                 // 引号数量
+            2,
+            "prefer-single",
+        ],
+        "react/jsx-indent": [                 // 缩进
+            2,
+            4,                      // 4个空格一个tab
+        ],
+        "import/no-unresolved": 0,
     },
 }
